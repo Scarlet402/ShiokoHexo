@@ -29,7 +29,9 @@
     <script async custom-element="amp-auto-ads"
         src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
     </script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/ShiokoHexo/custom_css_source.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="loading">
     <span id="config-title" style="display:none">RemiChef&#39;s diary</span>
@@ -61,18 +63,32 @@
 
         </div>
         <div class="content markdown">
-            <p>Link: <a target="_blank" rel="noopener" href="https://codeforces.com/contest/1477/problem/A">https://codeforces.com/contest/1477/problem/A</a></p>
+            <p>Link: https://codeforces.com/contest/1477/problem/A</p>
 <p>1800* math+constructive algorithm 不意外想了半天還是只能看tutorial QQ</p>
-<p>解法:<br>首先可以發現如果有一個Xi == 0, 則對於任意i(1 &lt;= i &lt;= n)我們可以用2x - y的操作構造出k * Xi(k 屬於 R),<br>且可以發現對於操作2x - y, 如果我們把x跟y都同減一個數字t, 則會變成2(x - t) - (y - t) = 2x - y - t,<br>也就是說操作出來的答案也會減t.</p>
-<p>把上面兩個觀察合併起來, 則我們可以把所有Xi減掉最小的那一項(在此稱為X1), 並且把k也減掉X1,<br>如此一來我們就有X1 = 0且答案等價於原本的輸入.</p>
-<p>接下來因為我們有[0, X2, X3….], 只要對任意i(2 &lt;= i &lt;= n), 做2 * Xi - 0的操作,<br>就可以獲得任意Xi * 2^p(p 屬於 Z), 再對這些元素做操作就可以獲得任意r * Xi(r 屬於 R).</p>
-<p>定義g = gcd(X1, X2, X3…), 我們想證明對於任何k(k整除g), 一定可以透過一些操作構造出k, 以下透過數歸法證明</p>
-<p>定義g0 = gcd(X1, X2, X3…, Xn - 1), 根據Bézout’s theorem, s * g0 + t * Xn = gcd(g0, Xn)一定存在可行解(s, t), 且gcd(g0, Xn) = g, 因此將式子改寫成s * g0 + t * Xn = g.</p>
-<p>根據上面的推論已知我們可以構造出任意倍數的Xi, 但是若要利用g0和Xn構造出g, 我們需要用2x - y這個操作構造出來, 可以發現當(s, t)中至少一個是偶數時, 可以輕鬆構造出解, 但如果(s, t)都是奇數呢?<br>這裏就是有點trickey的部分了, 我們需要知道Bézout’s theorem提供:“對於任意的ax + by = gcd(a, b),<br>(x, y)都有無限組解, 且一個解(s, t)可以構造出其他解透過<br>s’ = s - k * b / gcd(a, b), t’ = s + k * a / gcd(a, b), (k屬於Z)”,<br>又b / gcd(a, b)和a / gcd(a, b)互質, 因此不可能兩數皆為偶數, 所以當(s, t)皆為奇數時,<br>我們可以透過這個方式構造出(s’, t’), 且一定不會都是奇數, 然後就證明完可以用2x - y的操作以g0構出g了</p>
-<p>既然我們可以以g0構出g, 就可以以g1構出g0, g2構出g1…<br>唯一剩下的就是base case了, 也就是以g(n-1)構出g(n-2), 即以X1(= 0)構出gcd(X1, X2)(= X2),<br>很明顯不需要任何操作就可以構出X2, 因此數歸法證明完畢(對於任何g的倍數, 一定可以透過一些操作構造出來),<br>所以只要k - X0整除g, 就一定有解(別忘記我們開頭以X0同減整個序列).</p>
-<p>Solution:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cin &gt;&gt; t;</span><br><span class="line">while(t--) &#123;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  int coGcd &#x3D; 0;</span><br><span class="line">  vector&lt;int&gt; x(n);</span><br><span class="line">  for(int &amp;X : x) cin &gt;&gt; X;</span><br><span class="line">  rep(i, 1, n) coGcd &#x3D; __gcd(coGcd, x[i] - x[0]);</span><br><span class="line">  if ((k - x[0]) % coGcd) cout &lt;&lt; &quot;NO\n&quot;;</span><br><span class="line">  else cout &lt;&lt; &quot;YES\n&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>後記:<br>讀完並瞭解這個tutorial之後, 我唯一的感覺是:乾!這最好是有人可以在賽中想到並證出來啦, 到底是什麼題目歐齁齁齁</p>
+<p>解法:<br />
+首先可以發現如果有一個Xi == 0, 則對於任意i(1 &lt;= i &lt;= n)我們可以用2x - y的操作構造出k * Xi(k 屬於 R),<br />
+且可以發現對於操作2x - y, 如果我們把x跟y都同減一個數字t, 則會變成2(x - t) - (y - t) = 2x - y - t,<br />
+也就是說操作出來的答案也會減t.</p>
+<p>把上面兩個觀察合併起來, 則我們可以把所有Xi減掉最小的那一項(在此稱為X1), 並且把k也減掉X1,<br />
+如此一來我們就有X1 = 0且答案等價於原本的輸入.</p>
+<p>接下來因為我們有[0, X2, X3....], 只要對任意i(2 &lt;= i &lt;= n), 做2 * Xi - 0的操作,<br />
+就可以獲得任意Xi * 2^p(p 屬於 Z), 再對這些元素做操作就可以獲得任意r * Xi(r 屬於 R).</p>
+<p>定義g = gcd(X1, X2, X3...), 我們想證明對於任何k(k整除g), 一定可以透過一些操作構造出k, 以下透過數歸法證明</p>
+<p>定義g0 = gcd(X1, X2, X3..., Xn - 1), 根據Bézout's theorem, s * g0 + t * Xn = gcd(g0, Xn)一定存在可行解(s, t), 且gcd(g0, Xn) = g, 因此將式子改寫成s * g0 + t * Xn = g.</p>
+<p>根據上面的推論已知我們可以構造出任意倍數的Xi, 但是若要利用g0和Xn構造出g, 我們需要用2x - y這個操作構造出來, 可以發現當(s, t)中至少一個是偶數時, 可以輕鬆構造出解, 但如果(s, t)都是奇數呢?<br />
+這裏就是有點trickey的部分了, 我們需要知道Bézout's theorem提供:“對於任意的ax + by = gcd(a, b),<br />
+(x, y)都有無限組解, 且一個解(s, t)可以構造出其他解透過<br />
+s' = s - k * b / gcd(a, b), t' = s + k * a / gcd(a, b), (k屬於Z)",<br />
+又b / gcd(a, b)和a / gcd(a, b)互質, 因此不可能兩數皆為偶數, 所以當(s, t)皆為奇數時,<br />
+我們可以透過這個方式構造出(s', t'), 且一定不會都是奇數, 然後就證明完可以用2x - y的操作以g0構出g了</p>
+<p>既然我們可以以g0構出g, 就可以以g1構出g0, g2構出g1...<br />
+唯一剩下的就是base case了, 也就是以g(n-1)構出g(n-2), 即以X1(= 0)構出gcd(X1, X2)(= X2),<br />
+很明顯不需要任何操作就可以構出X2, 因此數歸法證明完畢(對於任何g的倍數, 一定可以透過一些操作構造出來),<br />
+所以只要k - X0整除g, 就一定有解(別忘記我們開頭以X0同減整個序列).</p>
+<p>Solution:<br />
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cin &gt;&gt; t;</span><br><span class="line">while(t--) &#123;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  int coGcd &#x3D; 0;</span><br><span class="line">  vector&lt;int&gt; x(n);</span><br><span class="line">  for(int &amp;X : x) cin &gt;&gt; X;</span><br><span class="line">  rep(i, 1, n) coGcd &#x3D; __gcd(coGcd, x[i] - x[0]);</span><br><span class="line">  if ((k - x[0]) % coGcd) cout &lt;&lt; &quot;NO\n&quot;;</span><br><span class="line">  else cout &lt;&lt; &quot;YES\n&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br />
+後記:<br />
+讀完並瞭解這個tutorial之後, 我唯一的感覺是:乾!這最好是有人可以在賽中想到並證出來啦, 到底是什麼題目歐齁齁齁</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -178,6 +194,25 @@
 </div>
 
 
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 
